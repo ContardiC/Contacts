@@ -69,6 +69,7 @@ void printList(struct Node *head)
     }
     while (head != NULL)
     {
+        puts(" --- CONTATTO ---");
         puts(head->contact.fname);
         puts(head->contact.lname);
         puts(head->contact.tel);
@@ -81,8 +82,49 @@ void printList(struct Node *head)
         {
             puts("Non ha espresso il consenso al trattamento dei dati al fine del marketing");
         }
+        puts(" --- FINE CONTATTO ---");
         head = head->next;
     }
+}
+void freeList(struct Node *head)
+{
+    struct Node *tmp;
+    while (head != NULL)
+    {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+}
+void toCSV(struct Node *head)
+{
+    FILE *file = fopen("contacts.csv", "w");
+    if (file == NULL)
+    {
+        puts("Errore nell'apertura del file");
+        return;
+    }
+    if (head == NULL)
+    {
+        puts("La rubrica è vuota: non ci sono contatti da salvare.");
+        fclose(file);
+        return;
+    }
+    // Scrivi l'intestazione del CSV
+    fprintf(file, "Nome,Cognome,Telefono,Città,Consenso Marketing\n");
+    while (head != NULL)
+    {
+        fprintf(file, "\"%s\",\"%s\",\"%s\",\"%s\",%d\n",
+                head->contact.fname,
+                head->contact.lname,
+                head->contact.tel,
+                head->contact.city,
+                head->contact.cons_marketing);
+        head = head->next;
+    }
+
+    fclose(file);
+    printf("Backup della rubrica salvato in contacts.csv\n");
 }
 int main()
 {
@@ -96,6 +138,8 @@ int main()
         puts("1) Inserisci un contatto");
         puts("2) Visualizza la Rubrica");
         puts("3) Elimina l'ultimo contatto inserito");
+        puts("4) Elimina tutti i contatti");
+        puts("5) Crea un file CSV di backup della rubrica");
         puts("0) Esci dal programma");
         scanf("%d", &opt);
         int ch;
@@ -127,6 +171,13 @@ int main()
             break;
         case 3:
             deleteLastContact(&contacts);
+            break;
+        case 4:
+            freeList(contacts);
+            contacts = NULL;
+            break;
+        case 5:
+            // Implement CSV backup functionality here
             break;
         default:
             puts("Input errato");
