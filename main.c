@@ -55,11 +55,14 @@ void printList(struct Node *head)
 int main()
 {
     int opt;
+    Contact c;
     struct Node *contacts = NULL;
+
     printf("|---- Welcome in Contacts ----|\n");
     do
     {
         puts("1) Inserisci un contatto");
+        puts("2) Visualizza la Rubrica");
         puts("0) Esci dal programma");
         scanf("%d", &opt);
         switch (opt)
@@ -68,9 +71,22 @@ int main()
             printf("Arriverci\n");
             break;
         case 1:
-
+            puts(" --- INSERIMENTO CONTATTO ---");
+            puts("Inserisci il nome: ");
+            gets(c.fname);
+            puts("Inserisci il cognome: ");
+            gets(c.lname);
+            puts("Inserisci il numero di telefono: ");
+            gets(c.tel);
+            puts("Inserisci la città di residenza o domicilio: ");
+            gets(c.city);
+            puts("0: Nego il consenso al trattamento dei miei dati a finalità di marketing");
+            puts("1: Do il consenso al trattamento dei miei dati a finalità di marketing");
+            scanf("%d", &c.cons_marketing);
+            insertContact(&contacts, c);
             break;
-
+        case 2:
+            printList(contacts);
         default:
             puts("Input errato");
             break;
