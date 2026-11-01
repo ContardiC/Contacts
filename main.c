@@ -110,7 +110,6 @@ void toCSV(struct Node *head)
         fclose(file);
         return;
     }
-    // Scrivi l'intestazione del CSV
     fprintf(file, "Nome,Cognome,Telefono,Città,Consenso Marketing\n");
     while (head != NULL)
     {
