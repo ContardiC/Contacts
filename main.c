@@ -65,6 +65,10 @@ int main()
         puts("2) Visualizza la Rubrica");
         puts("0) Esci dal programma");
         scanf("%d", &opt);
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+        {
+        }
         switch (opt)
         {
         case 0:
@@ -73,13 +77,13 @@ int main()
         case 1:
             puts(" --- INSERIMENTO CONTATTO ---");
             puts("Inserisci il nome: ");
-            gets(c.fname);
+            scanf(" %59[^\n]", c.fname);
             puts("Inserisci il cognome: ");
-            gets(c.lname);
+            scanf(" %59[^\n]", c.lname);
             puts("Inserisci il numero di telefono: ");
-            gets(c.tel);
+            scanf(" %19[^\n]", c.tel);
             puts("Inserisci la città di residenza o domicilio: ");
-            gets(c.city);
+            scanf(" %39[^\n]", c.city);
             puts("0: Nego il consenso al trattamento dei miei dati a finalità di marketing");
             puts("1: Do il consenso al trattamento dei miei dati a finalità di marketing");
             scanf("%d", &c.cons_marketing);
