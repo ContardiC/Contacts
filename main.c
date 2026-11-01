@@ -177,7 +177,7 @@ int main()
             contacts = NULL;
             break;
         case 5:
-            // Implement CSV backup functionality here
+            toCSV(contacts);
             break;
         default:
             puts("Input errato");
