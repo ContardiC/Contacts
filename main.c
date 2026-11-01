@@ -33,14 +33,34 @@ void insertContact(struct Node **head, Contact contact)
         tmp->next = new;
     }
 }
+void printList(struct Node *head)
+{
+    while (head != NULL)
+    {
+        puts(head->contact.fname);
+        puts(head->contact.lname);
+        puts(head->contact.tel);
+        puts(head->contact.city);
+        if (head->contact.cons_marketing == 1)
+        {
+            puts("Ha espresso il consenso al trattamento dei dati al fine del marketing");
+        }
+        else
+        {
+            puts("Non ha espresso il consenso al trattamento dei dati al fine del marketing");
+        }
+        head = head->next;
+    }
+}
 int main()
 {
     int opt;
+    struct Node *contacts = NULL;
     printf("|---- Welcome in Contacts ----|\n");
     do
     {
-        printf("1) Inserisci un contatto\n");
-        printf("0) Esci dal programma\n");
+        puts("1) Inserisci un contatto");
+        puts("0) Esci dal programma");
         scanf("%d", &opt);
         switch (opt)
         {
@@ -52,6 +72,7 @@ int main()
             break;
 
         default:
+            puts("Input errato");
             break;
         }
     } while (opt != 0);
