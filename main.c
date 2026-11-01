@@ -33,8 +33,40 @@ void insertContact(struct Node **head, Contact contact)
         tmp->next = new;
     }
 }
+void deleteLastContact(struct Node **head)
+{
+    if (*head == NULL)
+    {
+        puts("La rubrica è vuota: non ci sono contatti da eliminare.");
+        return;
+    }
+
+    struct Node *last = *head;
+    if (last->next == NULL)
+    {
+        *head = NULL;
+    }
+    else
+    {
+        struct Node *previous = NULL;
+        while (last->next != NULL)
+        {
+            previous = last;
+            last = last->next;
+        }
+        previous->next = NULL;
+    }
+
+    printf("Eliminato contatto: %s %s\n", last->contact.fname, last->contact.lname);
+    free(last);
+}
 void printList(struct Node *head)
 {
+    if (head == NULL)
+    {
+        puts("La rubrica è vuota");
+        return;
+    }
     while (head != NULL)
     {
         puts(head->contact.fname);
@@ -63,6 +95,7 @@ int main()
     {
         puts("1) Inserisci un contatto");
         puts("2) Visualizza la Rubrica");
+        puts("3) Elimina l'ultimo contatto inserito");
         puts("0) Esci dal programma");
         scanf("%d", &opt);
         int ch;
@@ -91,6 +124,10 @@ int main()
             break;
         case 2:
             printList(contacts);
+            break;
+        case 3:
+            deleteLastContact(&contacts);
+            break;
         default:
             puts("Input errato");
             break;
