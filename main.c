@@ -60,6 +60,23 @@ void deleteLastContact(struct Node **head)
     printf("Eliminato contatto: %s %s\n", last->contact.fname, last->contact.lname);
     free(last);
 }
+void printContact(Contact contact)
+{
+    puts(" --- CONTATTO ---");
+    puts(contact.fname);
+    puts(contact.lname);
+    puts(contact.tel);
+    puts(contact.city);
+    if (contact.cons_marketing == 1)
+    {
+        puts("Ha espresso il consenso al trattamento dei dati al fine del marketing");
+    }
+    else
+    {
+        puts("Non ha espresso il consenso al trattamento dei dati al fine del marketing");
+    }
+    puts(" --- FINE CONTATTO ---");
+}
 void printList(struct Node *head)
 {
     if (head == NULL)
@@ -69,20 +86,7 @@ void printList(struct Node *head)
     }
     while (head != NULL)
     {
-        puts(" --- CONTATTO ---");
-        puts(head->contact.fname);
-        puts(head->contact.lname);
-        puts(head->contact.tel);
-        puts(head->contact.city);
-        if (head->contact.cons_marketing == 1)
-        {
-            puts("Ha espresso il consenso al trattamento dei dati al fine del marketing");
-        }
-        else
-        {
-            puts("Non ha espresso il consenso al trattamento dei dati al fine del marketing");
-        }
-        puts(" --- FINE CONTATTO ---");
+        printContact(head->contact);
         head = head->next;
     }
 }
@@ -94,6 +98,29 @@ void freeList(struct Node *head)
         tmp = head;
         head = head->next;
         free(tmp);
+    }
+}
+void printContactsByCity(struct Node *head, char *city)
+{
+    int found = 0;
+
+    while (head != NULL)
+    {
+        if (strcmp(head->contact.city, city) == 0)
+        {
+            if (!found)
+            {
+                puts(" --- CONTATTI DELLA CITTÀ ---");
+            }
+            printContact(head->contact);
+            found = 1;
+        }
+        head = head->next;
+    }
+
+    if (!found)
+    {
+        puts("Nessun contatto trovato per questa città.");
     }
 }
 void toCSV(struct Node *head)
@@ -139,6 +166,7 @@ int main()
         puts("3) Elimina l'ultimo contatto inserito");
         puts("4) Elimina tutti i contatti");
         puts("5) Crea un file CSV di backup della rubrica");
+        puts("6) Visualizza i contatti di una città");
         puts("0) Esci dal programma");
         scanf("%d", &opt);
         int ch;
@@ -178,6 +206,20 @@ int main()
         case 5:
             toCSV(contacts);
             break;
+        case 6:
+        {
+            char city[40];
+            puts("Inserisci la città da cercare:");
+            scanf(" %39[^\n]", city);
+
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF)
+            {
+            }
+
+            printContactsByCity(contacts, city);
+            break;
+        }
         default:
             puts("Input errato");
             break;
